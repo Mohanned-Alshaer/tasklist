@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\taskcontroller;
+use App\Http\Controllers\TasksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
     // $name = "Mohanned";
     // $age = 22;
     // return view('about', [
@@ -52,7 +55,24 @@ Route::post('/show', function () {
     $name = $_POST['name'];
     return view('show',compact('name'));
 });
+
 // Route::post('/about', function () {
 //     $name = $_POST['name'];
 //     return view('about',compact('name'));
 // });
+// Route::get('/tasks', function () {
+//     $tasks = DB::table("tasks")->get();
+//     return view ('tasks', compact("tasks"));
+// });
+
+Route::get('/tasks', [taskcontroller::class,'index'])->name('tasks.index');
+Route::get('/tasks/{id}', [taskcontroller::class,'show'])->name('tasks.index');
+// Route::get('/tasks', [TasksController::class,'index'])->name('tasks.index');
+
+// Route::get('/tasks', [taskcontroller::class,'show'])->name('task.show');
+
+Route::get('/task/{id}', function ($id) {
+    $tasks = DB::table("tasks")->find($id);
+    // $tasks = DB::table("tasks")->where('id','=',$id)->get();
+    return view('task',compact('tasks'));
+});

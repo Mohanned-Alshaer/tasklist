@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    span {
+        font-weight: bold;
+    }
+</style>
 <body>
-    {{$name}}
+   <span>Name:</span> {{$tasks->name}}
+    <br>
+   <span>Discription:</span>  {{$tasks->discription}}
 </body>
 </html>
