@@ -12,8 +12,8 @@
     }
 </style>
 <body>
-   <span>Name:</span> {{$tasks->name}}
+   <span>Name:</span> {{$task->name}}
     <br>
-   <span>Discription:</span>  {{$tasks->discription}}
+   <span>Discription:</span>  {{$task->discription}}
 </body>
 </html>
