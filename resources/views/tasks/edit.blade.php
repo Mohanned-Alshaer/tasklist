@@ -9,9 +9,10 @@
     <div class="col-sm-offset-2 col-sm-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-                New Task
+                Update Task
             </div>
             <div class="panel-body">
+                <!-- Display Validation Errors -->
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -21,24 +22,23 @@
                         </ul>
                     </div>
                 @endif
-                <!-- Display Validation Errors -->
                 <!-- New Task Form -->
-                <form action="task/store" method="POST" class="form-horizontal">
+                <form action="/{{$task->id}}" method="POST" class="form-horizontal">
                     @csrf
+    `               @method("put")
                     <!-- Task Name -->
                     <div class="form-group">
                         <label for="task-name" class="col-sm-3 control-label">Task</label>
 
                         <div class="col-sm-6">
-                            <input type="text" name="name" id="task-name" class="form-control" value="">
+                            <input type="text" name="name" id="task-name" class="form-control" value="{{$task->name}}">
                         </div>
                     </div>
-
-                    <!-- Add Task Button -->
+                    <!-- Update Task Button -->
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
                             <button type="submit" class="btn btn-default">
-                                <i class="fa fa-btn fa-plus"></i>Add Task
+                                <i class="fa fa-btn fa-plus"></i>Update Task
                             </button>
                         </div>
                     </div>
@@ -59,14 +59,13 @@
                         <th>&nbsp;</th>
                     </thead>
                     <tbody>
-                       @foreach ($tasks as $key => $task )
+                       @foreach ($tasks as $key => $t )
                             <tr>
                                 <td class="table-text">{{++$key}}</td>
-                                <td class="table-text"><div> {{$task->name}}</div></td>
-
+                                <td class="table-text"><div> {{$t->name}}</div></td>
                                 <!-- Task Delete Button -->
                                 <td>
-                                    <form action="/tasks/destroy/{{$task->id}}" method="POST">
+                                    <form action="/tasks/destroy/{{$t->id}}" method="POST">
                                         @csrf
                                         <!-- @method('Delete') -->
                                         <button type="submit" class="btn btn-danger">
@@ -76,7 +75,7 @@
                                 </td>
                                 <!-- Task Update Button -->
                                 <td>
-                                    <form action="/tasks/edit/{{$task->id}}" method="POST">
+                                    <form action="/tasks/edit/{{$t->id}}" method="POST">
                                         @csrf
                                         <!-- @method('edit') -->
                                         <button type="submit" class="btn btn-success">

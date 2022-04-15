@@ -70,6 +70,9 @@ use Illuminate\Support\Facades\DB;
 Route::get('/tasks/{id}', [taskcontroller::class, 'show'])->name('task.show');
 Route::post('/task/store', [taskcontroller::class, 'store'])->name('task.store');
 Route::get('/', [taskcontroller::class, 'index'])->name('tasks.index');
+Route::post('/tasks/destroy/{id}', [taskcontroller::class,'destroy'])->name('task.destroy');
+Route::post('/tasks/edit/{id}', [taskcontroller::class,'update'])->name('task.update');
+Route::put('/{id}', [taskcontroller::class,'edit'])->name('task.edit');
 // Route::get('/', function () {
 //     return view('tasks');
 // });
