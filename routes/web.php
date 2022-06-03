@@ -1,87 +1,71 @@
 <?php
 
+use App\Http\Controllers\CatagoriesController;
+use App\Http\Controllers\CatagoryController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\taskcontroller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\taskcontroller;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\mobileController;
+use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\SocialsController;
+
 // use App\Http\Controllers\TasksController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-//     // $name = "Mohanned";
-//     // $age = 22;
-//     // return view('about', [
-//     //     'name' => $name,
-//     //     'age' => $age
-//     // ]);
-// Route::get('/about', function () {
-//     $tasks = [
-//         "1" => "task 1",
-//         "2" => "task 2",
-//         "3" => "task 3"
-//      ];
-//     //  $name = @$_POST['name'];
-//     return view("about",compact('tasks'));
-// });
-
-// Route::get('/contact', function () {
-//     // $name = "Mohammed";
-//     $name = request("name");
-//     $age = 30;
-//     return view ('contact', compact('name','age'));
-//     // return view ('contact')->with('name',$name)->with('age',$age);
-// });
-// Route::get('/show/{id}', function ($id) {
-//     $tasks = [
-//         "1" => "task 1",
-//         "2" => "task 2",
-//         "3" => "task 3"
-//      ];
-//      $task = $tasks[$id];
-//     return view('show',compact('task'));
-// });
-// Route::post('/show', function () {
-//     $name = $_POST['name'];
-//     return view('show',compact('name'));
-// });
-
-// Route::post('/about', function () {
-//     $name = $_POST['name'];
-//     return view('about',compact('name'));
-// });
-// Route::get('/tasks', function () {
-//     $tasks = DB::table("tasks")->get();
-//     return view ('tasks', compact("tasks"));
-// });
-
 // Route::get('/tasks', [taskcontroller::class, 'index'])->name('tasks.index');
+
+// Route::get('/', [HomeController::class, 'index'])->name('tasks.index');
+// task controller
 Route::get('/tasks/{id}', [taskcontroller::class, 'show'])->name('task.show');
 Route::post('/task/store', [taskcontroller::class, 'store'])->name('task.store');
-Route::get('/', [taskcontroller::class, 'index'])->name('tasks.index');
-Route::post('/tasks/destroy/{id}', [taskcontroller::class,'destroy'])->name('task.destroy');
-Route::post('/tasks/edit/{id}', [taskcontroller::class,'update'])->name('task.update');
-Route::put('/{id}', [taskcontroller::class,'edit'])->name('task.edit');
-// Route::get('/', function () {
-//     return view('tasks');
-// });
-// Route::get('/tasks', [TasksController::class,'index'])->name('tasks.index');
+Route::post('/tasks/destroy/{id}', [taskcontroller::class, 'destroy'])->name('task.destroy');
+Route::post('/tasks/edit/{id}', [taskcontroller::class, 'update'])->name('task.update');
+Route::put('/{id}', [taskcontroller::class, 'edit'])->name('task.edit');
+Route::get('/layout/admin', [taskcontroller::class, 'view'])->name('tasks.index');
+Route::get('/resturant/index', [taskcontroller::class, 'mainPage']);
 
-// Route::get('/tasks', [taskcontroller::class,'show'])->name('task.show');
+//Shop controller
+Route::get('/pages/add', [ShopController::class, 'create']);
+Route::post('/', [ShopController::class, 'store']);
+Route::post('/pages/destroy/{id}', [ShopController::class, 'destroy']);
+Route::post('/pages/edit/{id}', [ShopController::class, 'update']);
+Route::put('/{id}', [ShopController::class, 'edit']);
+// Route::put('/{id}', [ShopController::class,'edit']);
 
-// Route::get('/task/{id}', function ($id) {
-//     $tasks = DB::table("tasks")->find($id);
-//     // $tasks = DB::table("tasks")->where('id','=',$id)->get();
-//     return view('task',compact('tasks'));
-// });
+// Route::get('/index',[ShopController::class,'index']);
+
+//mobile controller
+Route::get('mobile/index', [mobileController::class, 'index']);
+Route::post('mobile/index', [mobileController::class, 'store'])->name('mobileIndex');
+Route::post('mobile/contact', [mobileController::class, 'store']);
+Route::get('mobile/about', [mobileController::class, 'about']);
+Route::get('mobile/contact', [mobileController::class, 'contact']);
+Route::get('mobile/brand', [mobileController::class, 'brand']);
+Route::get('mobile/special', [mobileController::class, 'special']);
+
+//Catagory controller
+Route::get('/', [CatagoryController::class, 'index'])->name('tasks.index');
+Route::get('layout/catagory/{id}', [CatagoryController::class, 'catag'])->name('catagory');
+Route::get('pages/messages/{id}', [CatagoryController::class, 'message'])->name('messages');
+Route::post('pages/messages/{id}', [ReplyController::class, 'store'])->name('messages');
+
+Auth::routes();
+
+//Catagories controller
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/pages/addCatagory', [CatagoriesController::class, 'index']);
+Route::post('/pages/addCatagory', [CatagoriesController::class, 'store']);
+Route::get('/pages/allCatagories', [CatagoriesController::class, 'print']);
+Route::post('/pages/allCatagories/destroy/{id}', [CatagoriesController::class, 'destroy']);
+Route::post('/pages/editCatagory/{id}', [CatagoriesController::class, 'update']);
+Route::put('/pages/allCatagories/{id}', [CatagoriesController::class, 'edit']);
+
+//socials Controller
+Route::get('/pages/SocialsAndAddress', [SocialsController::class, 'index'])->name('socials');
+Route::post('/pages/SocialsAndAddress', [SocialsController::class, 'store']);
+
+// Route::get('layout/catagory/1', [CatagoryController::class, 'catag'])->name('catagory1');
+// Route::get('layout/catagory2', [CatagoryController::class, 'catag2'])->name('catagory2');
+// Route::get('layout/catagory3', [CatagoryController::class, 'catag3'])->name('catagory3');

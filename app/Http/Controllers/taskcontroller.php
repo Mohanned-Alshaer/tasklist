@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use App\Models\shop;
 use Illuminate\Support\Facades\DB;
 use App\Models\Task;
         // public function index(){
@@ -10,11 +11,21 @@ use App\Models\Task;
         // }
 class taskcontroller extends Controller {
     //
+    public function __construct()
+    {
+       $this->middleware("auth");
+    }
+
     public function index(){
-        $tasks = Task::all();
+        // $tasks = Task::orderBy('name', 'asc')->get();
         // $tasks->name->orderBy('name', 'asc');
         // $tasks = DB::table("tasks")->orderBy('name', 'asc')->get();
-        return view("tasks.index",compact('tasks'));
+        // return view("tasks.index",compact('tasks'));
+        return view("/login");
+    }
+
+    public function view(){;
+        return view("layout/admin");
     }
 
     public function show($id){
@@ -52,7 +63,7 @@ class taskcontroller extends Controller {
         // $task = DB::table("tasks")->find($id);
         $task = Task::find($id);
         // $tasks = DB::table("tasks")->orderBy('name', 'asc')->get();
-        $tasks = Task::all();
+        $tasks = Task::orderBy('name', 'asc')->get();
         // $tasks = DB::table("tasks")->orderBy('name', 'asc')->get();
         return view("tasks.edit",compact('task','tasks'));
     }
@@ -73,5 +84,13 @@ class taskcontroller extends Controller {
         // $name = $request->input("name");
         // DB::update("update tasks set name=? WHERE id =$id",[$task->name]);
         // $task->save();
+    }
+    public function mainPage(){
+        $products = shop::all();
+        return view("resturant/index", compact("products"));
+    }
+    public function secondProject(){
+        $products = shop::all();
+        return view("mobile/index", compact("products"));
     }
 }
